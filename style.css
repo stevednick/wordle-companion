@@ -1,0 +1,62 @@
+body {
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+
+.tile-holder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.letter-box {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 6px;
+}
+
+.tile {
+  width: 62px;
+  height: 62px;
+  margin-right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  border: 2px;
+  border-style: solid;
+  border-color: #3a3a3c;
+  background-color: black;
+}
+
+.letter {
+  font-size: 3rem;
+  text-transform: uppercase;
+}
+
+.orange {
+  background-color: orange;
+  color: white;
+  border-color: orange;
+}
+
+.grey {
+  background-color: grey;
+  border-color: grey;
+  color: white;
+}
+
+.green {
+  background-color: green;
+  border-color: green;
+  color: white;
+}
+
+.go-button {
+  font-size: 2rem;
+}
+
+/*# sourceMappingURL=style.css.map */
