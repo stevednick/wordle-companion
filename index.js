@@ -18,8 +18,8 @@ var currentBestWord = "";
 const colourClasses = ["grey", "orange", "green"];
 
 function setup() {
-  for (const letter in letters) {
-    currentLetters.push(new letter(letter));
+  for (const l of letters) {
+    currentLetters.push(new letter(l));
   }
   // for (i = 0; i < letters.length; i++) {
   //   currentLetters.push(new letter(letters[i]));
@@ -29,9 +29,9 @@ setup();
 
 function getLetterCounts() {
   var letterCounts = [];
-  for (l = 0; l < letters.length; l++) {
+  for (var l = 0; l < letters.length; l++) {
     var tally = 0;
-    for (w = 0; w < currentWordList.length; w++) {
+    for (var w = 0; w < currentWordList.length; w++) {
       var ch = letters[l];
       var count = currentWordList[w].split(ch).length - 1;
       tally += count;
@@ -43,7 +43,7 @@ function getLetterCounts() {
 
 function removeLetter(letter, position = -1) {
   var listToReturn = [];
-  for (w = 0; w < currentWordList.length; w++) {
+  for (var w = 0; w < currentWordList.length; w++) {
     if (position < 0 && !currentWordList[w].includes(letter)) {
       listToReturn.push(currentWordList[w]);
     } else if (position >= 0) {
@@ -58,7 +58,7 @@ function removeLetter(letter, position = -1) {
 
 function keepLetter(letter, position) {
   var listToReturn = [];
-  for (w = 0; w < currentWordList.length; w++) {
+  for (var w = 0; w < currentWordList.length; w++) {
     if (currentWordList[w].charAt(position) == letter) {
       listToReturn.push(currentWordList[w]);
     }
@@ -69,7 +69,7 @@ function keepLetter(letter, position) {
 
 function removeWithout(letter) {
   var listToReturn = [];
-  for (w = 0; w < currentWordList.length; w++) {
+  for (var w = 0; w < currentWordList.length; w++) {
     if (currentWordList[w].includes(letter)) {
       listToReturn.push(currentWordList[w]);
     }
@@ -80,7 +80,7 @@ function removeWithout(letter) {
 
 function minimumNumber(letter, count) {
   var listToReturn = [];
-  for (i = 0; i < currentWordList.length; i++) {
+  for (var i = 0; i < currentWordList.length; i++) {
     if (
       (currentWordList[i].match(new RegExp(letter, "g")) || []).length >= count
     ) {
@@ -95,9 +95,9 @@ function getBestWord() {
   currentRound++;
   var wordScores = [];
   var letterCounts = getLetterCounts();
-  for (w = 0; w < currentWordList.length; w++) {
+  for (var w = 0; w < currentWordList.length; w++) {
     var score = 0;
-    for (l = 0; l < 5; l++) {
+    for (var l = 0; l < 5; l++) {
       var letterToCheck = currentWordList[w][l];
       if (currentLetters[letters.indexOf(letterToCheck)].minInWord == 0) {
         score += letterCounts[letters.indexOf(letterToCheck)];
@@ -109,11 +109,10 @@ function getBestWord() {
   }
   currentBestWord =
     currentWordList[wordScores.indexOf(Math.max(...wordScores))];
-  for (i = 0; i < 5; i++) {
+  for (var i = 0; i < 5; i++) {
     $(".box" + currentRound + " .l" + i).text(currentBestWord[i]);
     $(".box" + currentRound + " .l" + i).addClass("grey");
   }
-  alert(currentBestWord);
 
   //return currentWordList[wordScores.indexOf(Math.max(...wordScores))];
 }
@@ -130,7 +129,7 @@ function letterPressed(letter) {
     letterColours[letter] = 0;
   }
   resetColours();
-  for (i = 0; i < 5; i++) {
+  for (var i = 0; i < 5; i++) {
     $(".box" + currentRound + " .l" + i).addClass(
       colourClasses[letterColours[i]]
     );
@@ -142,8 +141,8 @@ function resetColours(letter = -1, makeGrey = false) {
   if (letter >= 0) {
     lettersToReset = [letter];
   }
-  for (l = 0; l < lettersToReset.length; l++) {
-    for (c = 0; c < colourClasses.length; c++) {
+  for (var l = 0; l < lettersToReset.length; l++) {
+    for (var c = 0; c < colourClasses.length; c++) {
       $(".box" + currentRound + " .l" + lettersToReset[l]).removeClass(
         colourClasses[c]
       );
@@ -172,7 +171,7 @@ function getNextWord() {
   // obtain all letters, positions and quantities.
 
   var word = currentBestWord;
-  for (p = 0; p < 5; p++) {
+  for (var p = 0; p < 5; p++) {
     var l = letters.indexOf(word[p]);
     switch (letterColours[p]) {
       case 0:
@@ -188,7 +187,7 @@ function getNextWord() {
       default:
     }
   }
-  for (r = 0; r < 5; r++) {
+  for (var r = 0; r < 5; r++) {
     var l = letters.indexOf(word[r]);
     if (letterColours[r] == 0 && currentLetters[l].minInWord == 0) {
       currentLetters[l].notPossible = [0, 1, 2, 3, 4];
@@ -201,11 +200,11 @@ function getNextWord() {
 
 function sortList() {
   currentWordList = wordList;
-  for (x = 0; x < letters.length; x++) {
-    for (y = 0; y < currentLetters[x].notPossible.length; y++) {
+  for (var x = 0; x < letters.length; x++) {
+    for (var y = 0; y < currentLetters[x].notPossible.length; y++) {
       removeLetter(letters[x], currentLetters[x].notPossible[y]);
     }
-    for (y = 0; y < currentLetters[x].positions.length; y++) {
+    for (var y = 0; y < currentLetters[x].positions.length; y++) {
       keepLetter(letters[x], currentLetters[x].positions[y]);
     }
     if (currentLetters[x].minInWord > 0) {
@@ -215,7 +214,7 @@ function sortList() {
 }
 
 function resetLetterCounts() {
-  for (i = 0; i < currentLetters.length; i++) {
+  for (var i = 0; i < currentLetters.length; i++) {
     currentLetters[i].minInWord = 0;
   }
 }
