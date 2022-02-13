@@ -12973,3 +12973,5 @@ export const wordList = [
   "rural",
   "shave",
 ];
+
+export { wordList };

@@ -1,4 +1,4 @@
-import { wordList } from "./modules/word-list.js";
+import { wordList } from "./word-list.js";
 
 function letter(character) {
   this.character = character;
