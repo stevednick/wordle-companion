@@ -17,12 +17,13 @@ var letterColours = [0, 0, 0, 0, 0];
 var currentBestWord = "";
 const colourClasses = ["grey", "orange", "green"];
 
-alert("h");
-
 function setup() {
-  for (i = 0; i < letters.length; i++) {
-    currentLetters.push(new letter(letters[i]));
+  for (const letter in letters) {
+    currentLetters.push(new letter(letter));
   }
+  // for (i = 0; i < letters.length; i++) {
+  //   currentLetters.push(new letter(letters[i]));
+  // }
 }
 setup();
 
@@ -112,6 +113,7 @@ function getBestWord() {
     $(".box" + currentRound + " .l" + i).text(currentBestWord[i]);
     $(".box" + currentRound + " .l" + i).addClass("grey");
   }
+  alert(currentBestWord);
 
   //return currentWordList[wordScores.indexOf(Math.max(...wordScores))];
 }
