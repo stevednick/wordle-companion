@@ -7,17 +7,17 @@ function letter(character) {
   this.notPossible = [];
 }
 
-console.log(wordList.wordList);
-
 var currentRound = -1;
 var bestWords = [];
 var colours = [];
 var currentWordList = wordList;
 const letters = "abcdefghijklmnopqrstuvwxyz";
-currentLetters = [];
+var currentLetters = [];
 var letterColours = [0, 0, 0, 0, 0];
 var currentBestWord = "";
 const colourClasses = ["grey", "orange", "green"];
+
+alert("h");
 
 function setup() {
   for (i = 0; i < letters.length; i++) {
