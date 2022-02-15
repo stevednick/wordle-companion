@@ -4,6 +4,11 @@ body {
   text-align: center;
 }
 
+.box-holder {
+  display: flex;
+  justify-content: space-around;
+}
+
 .tile-holder {
   display: flex;
   flex-direction: column;
@@ -53,6 +58,14 @@ body {
   background-color: green;
   border-color: green;
   color: white;
+}
+
+.best-word-box {
+  width: 300px;
+  height: 422px;
+  border: 2px;
+  border-style: solid;
+  border-color: #3a3a3c;
 }
 
 .go-button {

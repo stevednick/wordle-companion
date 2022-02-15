@@ -18,22 +18,9 @@ export function setup() {
   }
 }
 
-export function getBestWord() {
-  var wordScores = [];
-  var letterCounts = getLetterCounts();
-  for (var w = 0; w < currentWordList.length; w++) {
-    var score = 0;
-    for (var l = 0; l < 5; l++) {
-      var letterToCheck = currentWordList[w][l];
-      if (currentLetters[letters.indexOf(letterToCheck)].minInWord == 0) {
-        score += letterCounts[letters.indexOf(letterToCheck)];
-      }
-    }
-    var uniques = makeUnique(currentWordList[w]);
-
-    wordScores.push(score * uniques.length);
-  }
-  return currentWordList[wordScores.indexOf(Math.max(...wordScores))];
+export function getBestWords() {
+  var topWords = getTopWords();
+  return topWords;
 }
 
 export function getNextWord(bestWord, colours) {
@@ -67,6 +54,36 @@ export function getNextWord(bestWord, colours) {
   //resetColours(-1, true);
   //colours = [0, 0, 0, 0, 0];
   sortList();
+}
+
+function getTopWords() {
+  var letterCounts = getLetterCounts();
+  var wordList = [];
+  var wordScores = [];
+  for (var w = 0; w < currentWordList.length; w++) {
+    var score = 0;
+    for (var l = 0; l < 5; l++) {
+      var letterToCheck = currentWordList[w][l];
+      if (currentLetters[letters.indexOf(letterToCheck)].minInWord == 0) {
+        score += letterCounts[letters.indexOf(letterToCheck)];
+      }
+    }
+    var uniques = makeUnique(currentWordList[w]);
+
+    wordScores.push(score * uniques.length);
+  }
+
+  for (var i = 0; i < 10; i++) {
+    if (wordScores.length == 0) break;
+    var bestIndex = wordScores.indexOf(Math.max(...wordScores));
+    wordList.push({
+      word: currentWordList[bestIndex],
+      score: Math.max(...wordScores),
+    });
+    currentWordList.splice(bestIndex, 1);
+    wordScores.splice(bestIndex, 1);
+  }
+  return wordList;
 }
 
 function sortList() {

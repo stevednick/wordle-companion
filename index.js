@@ -1,5 +1,6 @@
 import { wordList } from "./modules/word-list.js";
 import * as Basic from "./modules/basic-solver.js";
+import * as TopDisplay from "./modules/display-top-words.js";
 
 var currentRound = -1;
 var bestWords = [];
@@ -8,6 +9,7 @@ var colours = [];
 var letterColours = [0, 0, 0, 0, 0];
 var currentBestWord = "";
 const colourClasses = ["grey", "orange", "green"];
+var topWords = [];
 
 function removeWithout(letter) {
   var listToReturn = [];
@@ -27,7 +29,9 @@ function setup() {
 
 function getBestWord() {
   currentRound++; // this stays
-  currentBestWord = Basic.getBestWord();
+  topWords = Basic.getBestWords();
+  TopDisplay.show(topWords);
+  currentBestWord = topWords[0].word;
   for (var i = 0; i < 5; i++) {
     $(".box" + currentRound + " .l" + i).text(currentBestWord[i]);
     $(".box" + currentRound + " .l" + i).addClass("grey");
