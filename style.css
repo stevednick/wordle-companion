@@ -69,11 +69,8 @@ body {
 }
 
 .best-word {
-  color: "red";
-}
-
-.best-word:hover {
-  color: "grey";
+  font-size: 17px;
+  cursor: pointer;
 }
 
 .go-button {

@@ -79,6 +79,10 @@ function resetColours(letter = -1, makeGrey = false) {
   }
 }
 
+export function changeWord(clickedElement) {
+  console.log(clickedElement);
+}
+
 $(".tile").click(function (event) {
   if ($(this).parent().attr("class")[14] == currentRound) {
     letterPressed($(this).attr("class")[6]);
@@ -91,10 +95,6 @@ $(".go-button").click(function (event) {
   letterColours = [0, 0, 0, 0, 0];
   //currentBestWord = Basic.getBestWord(); // can these be combined into getNextWord...?
   setRemainingText();
-});
-
-$(".best-word-box p").click(function (event) {
-  alert("clicked");
 });
 
 setup();
