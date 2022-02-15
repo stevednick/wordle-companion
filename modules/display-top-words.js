@@ -10,5 +10,6 @@ export function show(topWords) {
     .data(topWords)
     .enter()
     .append("p")
-    .text((d) => `${d.word}: ${d.score}`);
+    .text((d) => `${d.word}: ${d.score}`)
+    .classed("best-word", true);
 }

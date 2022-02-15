@@ -68,6 +68,14 @@ body {
   border-color: #3a3a3c;
 }
 
+.best-word {
+  color: "red";
+}
+
+.best-word:hover {
+  color: "grey";
+}
+
 .go-button {
   font-size: 2rem;
 }

@@ -2,6 +2,12 @@ import { wordList } from "./modules/word-list.js";
 import * as Basic from "./modules/basic-solver.js";
 import * as TopDisplay from "./modules/display-top-words.js";
 
+// Solver Requirements:
+// setup();
+// getBestWords(); returns [{word: "", score: ""} * 10]
+// getNextWord(testWord, colours); Modifies inside module so getBestWords() shows next set of options.
+// getCurrentWordListLength(); Returns number of remaining options.
+
 var currentRound = -1;
 var bestWords = [];
 var colours = [];
@@ -85,6 +91,10 @@ $(".go-button").click(function (event) {
   letterColours = [0, 0, 0, 0, 0];
   //currentBestWord = Basic.getBestWord(); // can these be combined into getNextWord...?
   setRemainingText();
+});
+
+$(".best-word-box p").click(function (event) {
+  alert("clicked");
 });
 
 setup();

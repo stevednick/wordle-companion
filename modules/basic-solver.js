@@ -23,10 +23,10 @@ export function getBestWords() {
   return topWords;
 }
 
-export function getNextWord(bestWord, colours) {
+export function getNextWord(testWord, colours) {
   // send in array of colours
   resetLetterCounts();
-  var word = bestWord;
+  var word = testWord;
 
   for (var p = 0; p < 5; p++) {
     var l = letters.indexOf(word[p]);
