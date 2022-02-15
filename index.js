@@ -38,11 +38,15 @@ function getBestWord() {
   topWords = Basic.getBestWords();
   TopDisplay.show(topWords);
   currentBestWord = topWords[0].word;
+  setLetters(currentBestWord);
+  setRemainingText();
+}
+
+function setLetters(word) {
   for (var i = 0; i < 5; i++) {
     $(".box" + currentRound + " .l" + i).text(currentBestWord[i]);
     $(".box" + currentRound + " .l" + i).addClass("grey");
   }
-  setRemainingText();
 }
 
 function setRemainingText() {
@@ -79,8 +83,9 @@ function resetColours(letter = -1, makeGrey = false) {
   }
 }
 
-export function changeWord(clickedElement) {
-  console.log(clickedElement);
+export function changeWord(newWord) {
+  currentBestWord = newWord;
+  setLetters(currentBestWord);
 }
 
 $(".tile").click(function (event) {

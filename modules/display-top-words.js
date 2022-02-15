@@ -14,5 +14,7 @@ export function show(topWords) {
     .append("p")
     .text((d) => `${d.word}: ${d.score}`)
     .classed("best-word", true)
-    .on("click", (event) => changeWord(event));
+    .on("click", (event) =>
+      changeWord(event.target.textContent.substring(0, 5))
+    );
 }
