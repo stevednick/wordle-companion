@@ -1,5 +1,5 @@
 import { wordList } from "./modules/word-list.js";
-import * as Basic from "./modules/basic-solver.js";
+import * as Solver from "./modules/basic-solver.js";
 import * as TopDisplay from "./modules/display-top-words.js";
 import * as TestSuite from "./modules/test-suite.js";
 
@@ -8,6 +8,7 @@ import * as TestSuite from "./modules/test-suite.js";
 // getBestWords(); returns [{word: "", score: ""} * 10]
 // getNextWord(testWord, colours); Modifies inside module so getBestWords() shows next set of options.
 // getCurrentWordListLength(); Returns number of remaining options.
+// reset();
 
 var currentRound = -1;
 var bestWords = [];
@@ -29,14 +30,14 @@ function removeWithout(letter) {
 }
 
 function setup() {
-  Basic.setup();
+  Solver.setup();
   getBestWord();
   setRemainingText();
 }
 
 function getBestWord() {
   currentRound++; // this stays
-  topWords = Basic.getBestWords();
+  topWords = Solver.getBestWords();
   TopDisplay.show(topWords);
   currentBestWord = topWords[0].word;
   setLetters(currentBestWord);
@@ -44,7 +45,7 @@ function getBestWord() {
 }
 
 function getNextWord() {
-  Basic.getNextWord(currentBestWord, letterColours);
+  Solver.getNextWord(currentBestWord, letterColours);
   getBestWord();
   letterColours = [0, 0, 0, 0, 0];
   //currentBestWord = Basic.getBestWord(); // can these be combined into getNextWord...?
@@ -60,7 +61,7 @@ function setLetters(word) {
 
 function setRemainingText() {
   $(".options-remaining").text(
-    Basic.getCurrentWordListLength() + "/" + wordList.length + " remaining."
+    Solver.getCurrentWordListLength() + "/" + wordList.length + " remaining."
   );
 }
 
@@ -120,10 +121,25 @@ function setColoursFromTest(newColours) {
 
 $(".go-button").click(function (event) {
   if ($(".test-word-input").val().length == 5) {
+    reset();
     TestSuite.testWord($(".test-word-input").val(), currentBestWord);
     return;
   }
   getNextWord();
 });
+
+function reset() {
+  Solver.reset();
+
+  currentRound = -1;
+  bestWords = [];
+  colours = [];
+  letterColours = [0, 0, 0, 0, 0];
+  currentBestWord = "";
+  topWords = [];
+  setup();
+
+  resetColours();
+}
 
 setup();

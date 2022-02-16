@@ -9,7 +9,7 @@ function letter(character) {
 
 const letters = "abcdefghijklmnopqrstuvwxyz";
 var currentLetters = [];
-var currentWordList = wordList;
+var currentWordList = [...wordList];
 export const getCurrentWordListLength = () => currentWordList.length;
 
 export function setup() {
@@ -70,15 +70,15 @@ function getTopWords() {
 
     wordScores.push(score * uniques.length);
   }
-
+  var currentWords = [...currentWordList];
   for (var i = 0; i < 10; i++) {
     if (wordScores.length == 0) break;
     var bestIndex = wordScores.indexOf(Math.max(...wordScores));
     wordList.push({
-      word: currentWordList[bestIndex],
+      word: currentWords[bestIndex],
       score: Math.max(...wordScores),
     });
-    currentWordList.splice(bestIndex, 1);
+    currentWords.splice(bestIndex, 1);
     wordScores.splice(bestIndex, 1);
   }
   return wordList;
@@ -157,4 +157,10 @@ function resetLetterCounts() {
 
 function makeUnique(str) {
   return String.prototype.concat(...new Set(str));
+}
+
+export function reset() {
+  currentLetters = [];
+  currentWordList = [...wordList];
+  setup();
 }
