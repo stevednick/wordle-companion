@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1>Wordle Companion</h1>
-    <input type="text" name="test-word" value="" />
+    <input class="test-word-input" type="text" name="test-word" value="" />
     <h2 class="options-remaining">1000/1000 remaining.</h2>
     <div class="box-holder">
       <div class="tile-holder">
@@ -60,6 +60,7 @@
     <button class="go-button" type="button" name="go-button">Go!</button>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script type="module" src="modules/display-top-words.js"></script>
+    <script type="module" src="modules/test-suite.js"></script>
     <script type="module" src="modules/word-list.js"></script>
     <script type="module" src="modules/basic-solver.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

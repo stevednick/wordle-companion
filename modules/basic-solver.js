@@ -51,8 +51,6 @@ export function getNextWord(testWord, colours) {
       currentLetters[l].notPossible = [0, 1, 2, 3, 4];
     }
   }
-  //resetColours(-1, true);
-  //colours = [0, 0, 0, 0, 0];
   sortList();
 }
 

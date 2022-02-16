@@ -1,6 +1,7 @@
 import { wordList } from "./modules/word-list.js";
 import * as Basic from "./modules/basic-solver.js";
 import * as TopDisplay from "./modules/display-top-words.js";
+import * as TestSuite from "./modules/test-suite.js";
 
 // Solver Requirements:
 // setup();
@@ -39,6 +40,14 @@ function getBestWord() {
   TopDisplay.show(topWords);
   currentBestWord = topWords[0].word;
   setLetters(currentBestWord);
+  setRemainingText();
+}
+
+function getNextWord() {
+  Basic.getNextWord(currentBestWord, letterColours);
+  getBestWord();
+  letterColours = [0, 0, 0, 0, 0];
+  //currentBestWord = Basic.getBestWord(); // can these be combined into getNextWord...?
   setRemainingText();
 }
 
@@ -88,18 +97,33 @@ export function changeWord(newWord) {
   setLetters(currentBestWord);
 }
 
+export function returnColoursAndGetNextWord(colours) {
+  setColoursFromTest(colours);
+  getNextWord();
+  return currentBestWord;
+}
+
 $(".tile").click(function (event) {
   if ($(this).parent().attr("class")[14] == currentRound) {
     letterPressed($(this).attr("class")[6]);
   }
 });
+function setColoursFromTest(newColours) {
+  letterColours = newColours;
+  resetColours();
+  for (var i = 0; i < 5; i++) {
+    $(".box" + currentRound + " .l" + i).addClass(
+      colourClasses[letterColours[i]]
+    );
+  }
+}
 
 $(".go-button").click(function (event) {
-  Basic.getNextWord(currentBestWord, letterColours);
-  getBestWord();
-  letterColours = [0, 0, 0, 0, 0];
-  //currentBestWord = Basic.getBestWord(); // can these be combined into getNextWord...?
-  setRemainingText();
+  if ($(".test-word-input").val().length == 5) {
+    TestSuite.testWord($(".test-word-input").val(), currentBestWord);
+    return;
+  }
+  getNextWord();
 });
 
 setup();
