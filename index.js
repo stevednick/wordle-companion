@@ -2,6 +2,7 @@ import { wordList } from "./modules/word-list.js";
 import * as Solver from "./modules/basic-solver.js";
 import * as TopDisplay from "./modules/display-top-words.js";
 import * as TestSuite from "./modules/test-suite.js";
+import * as NewSolver from "./modules/shannon-solver.js";
 
 // Solver Requirements:
 // setup();
@@ -30,6 +31,7 @@ function removeWithout(letter) {
 }
 
 function setup() {
+  NewSolver.test();
   Solver.setup();
   getBestWord();
   setRemainingText();
