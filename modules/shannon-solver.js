@@ -110,13 +110,12 @@ export function getBestWords(firstRound = false) {
 export function getNextWord(testWord, colours) {
   const newWordList = [];
   for (const w of currentWordList) {
-    if (checkIfValid(testWord, w, colours)) newWordList.push(w);
+    if (checkIfValid(testWord, guess, colours)) newWordList.push(w);
   }
   currentWordList = [...newWordList];
-
   function checkIfValid(guess, word, colours) {
     const used = [0, 0, 0, 0, 0];
-    for (var i = 0; i < 5; i++) {
+    for (var pos = 0; pos < 5; pos++) {
       for (const colour of colours) {
         if (colour === 0 && word.includes(guess[pos])) return false;
         if (colour === 1) {
@@ -135,8 +134,20 @@ export function getNextWord(testWord, colours) {
         }
       }
     }
+
+    function checkForUnusedSlot(letter) {
+      // integrate this
+      for (var i = 0; i < 5; i++) {
+        if (word[i] == letter && used[i] === 0) {
+          used[i] = 1;
+          return true;
+        }
+      }
+      return false;
+    }
+
+    return true;
   }
-  return true;
 }
 
 function calculateScore(word) {}
