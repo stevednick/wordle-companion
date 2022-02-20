@@ -1,8 +1,8 @@
 import { wordList } from "./modules/word-list.js";
-import * as Solver from "./modules/basic-solver.js";
+import * as OldSolver from "./modules/basic-solver.js";
 import * as TopDisplay from "./modules/display-top-words.js";
 import * as TestSuite from "./modules/test-suite.js";
-import * as NewSolver from "./modules/shannon-solver.js";
+import * as Solver from "./modules/shannon-solver.js";
 
 // Solver Requirements:
 // setup();
@@ -31,15 +31,14 @@ function removeWithout(letter) {
 }
 
 function setup() {
-  NewSolver.test();
+  //NewSolver.test();
   Solver.setup();
-  getBestWord();
-  setRemainingText();
+  getBestWord(true);
 }
 
-function getBestWord() {
+function getBestWord(firstRound) {
   currentRound++; // this stays
-  topWords = Solver.getBestWords();
+  topWords = Solver.getBestWords(true);
   TopDisplay.show(topWords);
   currentBestWord = topWords[0].word;
   setLetters(currentBestWord);

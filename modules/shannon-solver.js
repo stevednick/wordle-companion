@@ -10,6 +10,40 @@ import { wordList } from "../modules/word-list.js";
 var currentWordList = [...wordList];
 const letters = "abcdefghijklmnopqrstuvwxyz";
 
+function testWord(word, used = [0, 0, 0, 0, 0]) {
+  // which fecking way around?
+  this.word = word;
+  this.used = used;
+  this.checkIfValid = (guess, pos, colour) => {
+    if (colour === 0 && this.word.includes(guess[pos])) return false;
+    if (colour === 1) {
+      if (this.word[pos] === guess[pos]) return false;
+      return this.checkForUnusedSlot(guess[pos]);
+    }
+    if (colour === 2) {
+      if (this.word[pos] === guess[pos]) {
+        if (this.used[pos] === 0) {
+          this.used[pos] = 1;
+          return true;
+        } else {
+          return this.checkForUnusedSlot(guess[pos]);
+        }
+      }
+      return false;
+    }
+    return true;
+  };
+  this.checkForUnusedSlot = (letter) => {
+    for (var i = 0; i < 5; i++) {
+      if (this.word[i] == letter && this.used[i] === 0) {
+        this.used[i] = 1;
+        return true;
+      }
+    }
+    return false;
+  };
+}
+
 function word(word) {
   // for a particular word you only need to get the comparison colours once.
   // some sorting algorithm to get the count of each? Maybe do during assembly of possibilities?
@@ -18,7 +52,8 @@ function word(word) {
   this.possibilites;
   this.score = 0; // this is the number that matters. how to get this without running through everything twice?
   this.setup = () => {
-    this.possibilites = getPossibilities(); // set these up
+    this.possibilites = getPossibilities(this.word); // set these up
+
     for (const pos of this.possibilites) {
       //pos.getCount(this.word);
       if (pos.count > 0) this.score += pos.bits();
@@ -31,20 +66,25 @@ function possibility(colours, count) {
   this.count = count;
   this.probability = () => this.count / currentWordList.length;
   this.bits = () => this.probability() * Math.log2(1.0 / this.probability());
-  // this.getCount = (word) => {
-  //   // how to make this way fucking quicker?
-  //   for (const w of currentWordList) {
-  //     var include = true;
-  //     const wColours = assignColours(word, w);
-  //     for (var i = 0; i < 5; i++) {
-  //       if (wColours[i] != colours[i]) include = false;
-  //     }
-  //     if (include) this.count++;
-  //   }
-  // };
 }
 
-export function getBestWords() {
+export function setup() {}
+
+export function getBestWords(firstRound = false) {
+  if (firstRound) {
+    return [
+      { word: "tares", score: 6.194 },
+      { word: "lares", score: 6.15 },
+      { word: "rales", score: 6.114 },
+      { word: "rates", score: 6.1 },
+      { word: "teras", score: 6.08 },
+      { word: "nares", score: 6.07 },
+      { word: "soare", score: 6.06 },
+      { word: "tales", score: 6.05 },
+      { word: "reais", score: 6.05 },
+      { word: "tears", score: 6.03 },
+    ];
+  }
   const wordList = [];
   const scores = [];
   const top10 = [];
@@ -67,15 +107,41 @@ export function getBestWords() {
   return top10;
 }
 
-export function test() {
-  // const top = getBestWords();
-  // alert(top[0].word);
-  //alert(w.possibilites[0]);
+export function getNextWord(testWord, colours) {
+  const newWordList = [];
+  for (const w of currentWordList) {
+    if (checkIfValid(testWord, w, colours)) newWordList.push(w);
+  }
+  currentWordList = [...newWordList];
+
+  function checkIfValid(guess, word, colours) {
+    const used = [0, 0, 0, 0, 0];
+    for (var i = 0; i < 5; i++) {
+      for (const colour of colours) {
+        if (colour === 0 && word.includes(guess[pos])) return false;
+        if (colour === 1) {
+          if (word[pos] === guess[pos]) return false;
+          if (!checkForUnusedSlot(guess[pos])) return false;
+        }
+        if (colour === 2) {
+          if (word[pos] === guess[pos]) {
+            if (used[pos] === 0) {
+              used[pos] = 1;
+              continue;
+            } else {
+              return checkForUnusedSlot(guess[pos]);
+            }
+          }
+          return true;
+        }
+      }
+    }
+  }
 }
 
 function calculateScore(word) {}
 
-function getPossibilities() {
+function getPossibilities(guess) {
   // Note! Plan is to send in the currentWordList,
   // and while assembly of list is taking place
   // it gradually refines the list to match the colours.
@@ -84,15 +150,23 @@ function getPossibilities() {
   // if this works I am a clever little shit.
 
   var allPossibilities = [];
-  next([], 0, currentWordList); // Send in an empty array to be populated with the options and the first index.
+  const wordList = [];
+  for (const w of currentWordList) wordList.push(new testWord(w));
+  next([], 0, wordList); // Send in an empty array to be populated with the options and the first index.
   function next(current, index, words) {
+    if (words.length == 0) return;
     if (index === 5) {
       // if index == 5 then array should have 5 digits in it.
-      allPossibilities.push(new possibility(current, 7)); // append array to allPossibilities.
+      allPossibilities.push(new possibility(current, words.length)); // append array to allPossibilities.
       return; // break this particular line in the stack.
     }
     for (var i = 0; i < 3; i++) {
-      next([...current, i], index + 1);
+      const newList = [];
+      for (const w of words) {
+        const word = new testWord(w.word, w.used);
+        if (word.checkIfValid(guess, index, i)) newList.push(word);
+      }
+      next([...current, i], index + 1, newList);
     }
   }
   return allPossibilities;
@@ -116,4 +190,8 @@ function assignColours(word, wordToBeTested) {
     }
   }
   return colours;
+}
+
+export function getCurrentWordListLength() {
+  return currentWordList.length;
 }
