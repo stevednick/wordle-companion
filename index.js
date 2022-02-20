@@ -38,7 +38,8 @@ function setup() {
 
 function getBestWord(firstRound) {
   currentRound++; // this stays
-  topWords = Solver.getBestWords(firstRound);
+
+  topWords = Solver.getBestWords(currentRound == 0);
   TopDisplay.show(topWords);
   currentBestWord = topWords[0].word;
   setLetters(currentBestWord);

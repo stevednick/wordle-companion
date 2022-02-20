@@ -116,22 +116,19 @@ export function getNextWord(testWord, colours) {
   function checkIfValid(guess, word, colours) {
     const used = [0, 0, 0, 0, 0];
     for (var pos = 0; pos < 5; pos++) {
-      for (const colour of colours) {
-        if (colour === 0 && word.includes(guess[pos])) return false;
-        if (colour === 1) {
-          if (word[pos] === guess[pos]) return false;
-          if (!checkForUnusedSlot(guess[pos])) return false;
-        }
-        if (colour === 2) {
-          if (word[pos] === guess[pos]) {
-            if (used[pos] === 0) {
-              used[pos] = 1;
-              continue;
-            } else {
-              if (!checkForUnusedSlot(guess[pos])) return false;
-            }
+      if (colours[pos] === 0 && word.includes(guess[pos])) return false;
+      if (colours[pos] === 1) {
+        if (word[pos] === guess[pos]) return false;
+        if (!checkForUnusedSlot(guess[pos])) return false;
+      }
+      if (colours[pos] === 2) {
+        if (word[pos] === guess[pos]) {
+          if (used[pos] === 0) {
+            used[pos] = 1;
+          } else {
+            if (!checkForUnusedSlot(guess[pos])) return false;
           }
-        }
+        } else return false;
       }
     }
 
