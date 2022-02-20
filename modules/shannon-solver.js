@@ -110,7 +110,7 @@ export function getBestWords(firstRound = false) {
 export function getNextWord(testWord, colours) {
   const newWordList = [];
   for (const w of currentWordList) {
-    if (checkIfValid(testWord, guess, colours)) newWordList.push(w);
+    if (checkIfValid(testWord, w, colours)) newWordList.push(w);
   }
   currentWordList = [...newWordList];
   function checkIfValid(guess, word, colours) {
@@ -128,7 +128,7 @@ export function getNextWord(testWord, colours) {
               used[pos] = 1;
               continue;
             } else {
-              return checkForUnusedSlot(guess[pos]);
+              if (!checkForUnusedSlot(guess[pos])) return false;
             }
           }
         }
