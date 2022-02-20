@@ -132,11 +132,11 @@ export function getNextWord(testWord, colours) {
               return checkForUnusedSlot(guess[pos]);
             }
           }
-          return true;
         }
       }
     }
   }
+  return true;
 }
 
 function calculateScore(word) {}
