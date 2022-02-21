@@ -106,6 +106,12 @@ export function returnColoursAndGetNextWord(colours) {
   return currentBestWord;
 }
 
+$(".change-word-button").click(function (event) {
+  if ($(".test-word-input").val().length == 5) {
+    changeWord($(".test-word-input").val());
+  }
+});
+
 $(".tile").click(function (event) {
   if ($(this).parent().attr("class")[14] == currentRound) {
     letterPressed($(this).attr("class")[6]);
@@ -122,11 +128,11 @@ function setColoursFromTest(newColours) {
 }
 
 $(".go-button").click(function (event) {
-  if ($(".test-word-input").val().length == 5) {
-    reset();
-    TestSuite.testWord($(".test-word-input").val(), currentBestWord);
-    return;
-  }
+  // if ($(".test-word-input").val().length == 5) {
+  //   reset();
+  //   TestSuite.testWord($(".test-word-input").val(), currentBestWord);
+  //   return;
+  // }
   getNextWord();
 });
 

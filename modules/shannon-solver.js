@@ -133,7 +133,6 @@ export function getNextWord(testWord, colours) {
     }
 
     function checkForUnusedSlot(letter) {
-      // integrate this
       for (var i = 0; i < 5; i++) {
         if (word[i] == letter && used[i] === 0) {
           used[i] = 1;
@@ -150,13 +149,6 @@ export function getNextWord(testWord, colours) {
 function calculateScore(word) {}
 
 function getPossibilities(guess) {
-  // Note! Plan is to send in the currentWordList,
-  // and while assembly of list is taking place
-  // it gradually refines the list to match the colours.
-  // And then sends the length of the list to the possibility when assembling.
-  // therefore (hopefully) saving a fuck load of time.
-  // if this works I am a clever little shit.
-
   var allPossibilities = [];
   const wordList = [];
   for (const w of currentWordList) wordList.push(new testWord(w));
@@ -203,3 +195,5 @@ function assignColours(word, wordToBeTested) {
 export function getCurrentWordListLength() {
   return currentWordList.length;
 }
+
+export function reset() {} // populate this!
