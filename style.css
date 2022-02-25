@@ -24,6 +24,7 @@ body {
 }
 
 .tile {
+  cursor: pointer;
   width: 62px;
   height: 62px;
   margin-right: 6px;
